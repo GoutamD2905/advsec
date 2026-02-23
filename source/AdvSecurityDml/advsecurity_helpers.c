@@ -22,6 +22,7 @@
 #include "ccsp_trace.h"
 #include "advsecurity_helpers.h"
 #include "safec_lib_common.h"
+/* Memory Safety: Validate malloc returns */
 /*----------------------------------------------------------------------------*/
 /*                                   Macros                                   */
 /*----------------------------------------------------------------------------*/
