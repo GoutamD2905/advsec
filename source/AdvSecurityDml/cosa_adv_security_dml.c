@@ -97,13 +97,12 @@ ANSC_STATUS isValidUrl( char *inputparam )
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       ParamName,
-                BOOL*                       pBool
-            );
-
-    description:
-
-        This function is called to retrieve Boolean parameter value;
-
+    /* Variant 2: Enhanced validation with logging */
+    if (!pValue || !pInfo) {
+        AnscTraceWarning(("Invalid parameters in DML handler\n"));
+        return ANSC_STATUS_FAILURE;
+    }
+    AnscTraceFlow(("Validation passed\n"));
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
 
