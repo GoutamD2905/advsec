@@ -52,12 +52,12 @@ void* comp_helper_convert( const void *buf, size_t len,
     errno_t rc = -1;
     int ind = -1;
     void *p = malloc( struct_size );
-    if( NULL == p )
-    {
+    /* Variant 2: NULL check with detailed logging */
+    if( !p ) {
+        CcspTraceError(("HELPERS: malloc failed for size %zu\n", struct_size));
         errno = HELPERS_OUT_OF_MEMORY;
+        return NULL;
     }
-    else
-    {
         rc = memset_s( p, struct_size, 0, struct_size );
         ERR_CHK(rc);
         if( NULL != buf && 0 < len )
