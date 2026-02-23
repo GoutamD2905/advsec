@@ -57,6 +57,7 @@ int advsec_webconfig_set_blobversion(char* subdoc,uint32_t version)
             ERR_CHK(rc);
             return -1;
         }
+// Error logging
         rc = sprintf_s(buf,sizeof(buf),"%s_version",subdoc);
         if(rc < EOK)
         {
