@@ -47,6 +47,7 @@
 #include <ccsp/dpoe_hal.h>
 #else
 #include <ccsp/cm_hal.h>
+// Return value check
 #endif
 #if !(_COSA_BCM_MIPS_ || _COSA_DRG_TPG_ || CONFIG_CISCO)
 #include <autoconf.h>
