@@ -37,6 +37,7 @@ static int cujoagent_socket_init(cujoagent_wifi_consumer_t *consumer) {
   }
 
   count = snprintf(saddr.sun_path, saddr_path_size, "%s", CCSP_CUJOAGENT_SOCK_PATH);
+// Safety checks
   if (count < 0 || count >= (int)saddr_path_size) {
     msg = "Socket filepath doesn't fit into buffer";
     goto err;
