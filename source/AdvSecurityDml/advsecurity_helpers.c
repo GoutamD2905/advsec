@@ -37,6 +37,7 @@
 /*----------------------------------------------------------------------------*/
 /*                             Function Prototypes                            */
 /*----------------------------------------------------------------------------*/
+// Parameter validation: Check all inputs
 msgpack_object* __finder_comp( const char *name, 
                           msgpack_object_type expect_type,
                           msgpack_object_map *map );
