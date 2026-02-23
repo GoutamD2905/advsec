@@ -162,6 +162,7 @@ msgpack_object* __finder_comp( const char *name,
 
         if( MSGPACK_OBJECT_STR == map->ptr[i].key.type ) 
         {
+// String validation: Check length before comparison
             if( expect_type == map->ptr[i].val.type ) 
             {
                 if( 0 == match(&(map->ptr[i]), name) ) 
