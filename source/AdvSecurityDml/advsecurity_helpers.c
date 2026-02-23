@@ -55,82 +55,82 @@ void* comp_helper_convert( const void *buf, size_t len,
     if( NULL == p )
     {
         errno = HELPERS_OUT_OF_MEMORY;
+        return NULL;
     }
-    else
+    
+    rc = memset_s( p, struct_size, 0, struct_size );
+    ERR_CHK(rc);
+    
+    if( NULL != buf && 0 < len )
     {
-        rc = memset_s( p, struct_size, 0, struct_size );
-        ERR_CHK(rc);
-        if( NULL != buf && 0 < len )
-        {
-            size_t offset = 0;
-            msgpack_unpacked msg;
-            msgpack_unpack_return mp_rv;
-            msgpack_unpacked_init( &msg );
-            /* The outermost wrapper MUST be a map. */
-            mp_rv = msgpack_unpack_next( &msg, (const char*) buf, len, &offset );
-	/*For Printing the msgpack object use the following 3 lines*/
-	    msgpack_object obj = msg.data;
-            msgpack_object_print(stdout, obj);
-            fprintf(stderr,"\n");
+        size_t offset = 0;
+        msgpack_unpacked msg;
+        msgpack_unpack_return mp_rv;
+        msgpack_unpacked_init( &msg );
+        /* The outermost wrapper MUST be a map. */
+        mp_rv = msgpack_unpack_next( &msg, (const char*) buf, len, &offset );
+        /*For Printing the msgpack object use the following 3 lines*/
+        msgpack_object obj = msg.data;
+        msgpack_object_print(stdout, obj);
+        fprintf(stderr,"\n");
 
-            if( (MSGPACK_UNPACK_SUCCESS == mp_rv) && (0 != offset) &&
-                (MSGPACK_OBJECT_MAP == msg.data.type) )
-            {
-                msgpack_object *inner;
-                msgpack_object *subdoc_name;
-                msgpack_object *version;
-                msgpack_object *transaction_id;
-                
-                if(NULL != wrapper)
-                {
-                    rc = strcmp_s("parameters", strlen("parameters"), wrapper, &ind);
-                    ERR_CHK(rc);
-                    if((rc == EOK) && (ind == 0))
-                    {
-                        inner = __finder_comp( wrapper, expect_type, &msg.data.via.map );
-                    
-                        if( ((NULL != inner) && (0 == (process)(p, 1, inner))) ||
-                              ((true == optional) && (NULL == inner)) )
-                        {
-                            msgpack_unpacked_destroy( &msg );
-                            errno = HELPERS_OK;
-                            return p;
-                        }
-                        else
-                        {
-                            errno = HELPERS_INVALID_FIRST_ELEMENT;
-                        }
-                    }
-                    else if((rc == EOK) && (ind != 0))
-                    {
-                        inner = __finder_comp( wrapper, expect_type, &msg.data.via.map );
-                        subdoc_name =  __finder_comp( "subdoc_name", expect_type, &msg.data.via.map );
-                        version =  __finder_comp( "version", expect_type, &msg.data.via.map );
-                        transaction_id =  __finder_comp( "transaction_id", expect_type, &msg.data.via.map );
-                    
-                        if( ((NULL != inner) && (0 == (process)(p,4, inner, subdoc_name, version, transaction_id))) ||
-                              ((true == optional) && (NULL == inner)) )
-                        {
-                            msgpack_unpacked_destroy( &msg );
-                            errno = HELPERS_OK;
-                            return p;
-                        }
-                        else 
-                        {      
-                            CcspTraceWarning(("%s Invalid first element\n", __FUNCTION__));
-                            errno = HELPERS_INVALID_FIRST_ELEMENT;
-                        }
-                   }
-                }
-              }
-            msgpack_unpacked_destroy( &msg );
-            if(NULL!=p)
-            {
-               (destroy)( p );
-                p = NULL;
-            }
+        if( (MSGPACK_UNPACK_SUCCESS == mp_rv) && (0 != offset) &&
+            (MSGPACK_OBJECT_MAP == msg.data.type) )
+        {
+            msgpack_object *inner;
+            msgpack_object *subdoc_name;
+            msgpack_object *version;
+            msgpack_object *transaction_id;
             
+            if(NULL != wrapper)
+            {
+                rc = strcmp_s("parameters", strlen("parameters"), wrapper, &ind);
+                ERR_CHK(rc);
+                if((rc == EOK) && (ind == 0))
+                {
+                    inner = __finder_comp( wrapper, expect_type, &msg.data.via.map );
+                
+                    if( ((NULL != inner) && (0 == (process)(p, 1, inner))) ||
+                          ((true == optional) && (NULL == inner)) )
+                    {
+                        msgpack_unpacked_destroy( &msg );
+                        errno = HELPERS_OK;
+                        return p;
+                    }
+                    else
+                    {
+                        errno = HELPERS_INVALID_FIRST_ELEMENT;
+                    }
+                }
+                else if((rc == EOK) && (ind != 0))
+                {
+                    inner = __finder_comp( wrapper, expect_type, &msg.data.via.map );
+                    subdoc_name =  __finder_comp( "subdoc_name", expect_type, &msg.data.via.map );
+                    version =  __finder_comp( "version", expect_type, &msg.data.via.map );
+                    transaction_id =  __finder_comp( "transaction_id", expect_type, &msg.data.via.map );
+                
+                    if( ((NULL != inner) && (0 == (process)(p,4, inner, subdoc_name, version, transaction_id))) ||
+                          ((true == optional) && (NULL == inner)) )
+                    {
+                        msgpack_unpacked_destroy( &msg );
+                        errno = HELPERS_OK;
+                        return p;
+                    }
+                    else 
+                    {      
+                        CcspTraceWarning(("%s Invalid first element\n", __FUNCTION__));
+                        errno = HELPERS_INVALID_FIRST_ELEMENT;
+                    }
+               }
+            }
+          }
+        msgpack_unpacked_destroy( &msg );
+        if(NULL!=p)
+        {
+           (destroy)( p );
+            p = NULL;
         }
+        
     }
     return p;
 }
