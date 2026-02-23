@@ -97,13 +97,12 @@ ANSC_STATUS isValidUrl( char *inputparam )
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       ParamName,
-                BOOL*                       pBool
-            );
-
-    description:
-
-        This function is called to retrieve Boolean parameter value;
-
+    /* Variant 1: Basic error checking */
+    if (pValue == NULL || pInfo == NULL) {
+        CcspTraceError(("NULL parameters detected\n"));
+        return FALSE;
+    }
+    CcspTraceInfo(("Parameters validated\n"));
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
 
