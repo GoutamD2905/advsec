@@ -146,6 +146,12 @@ msgpack_object* __finder_comp( const char *name,
 {
     uint32_t i;
 
+    if(map == NULL)
+    {
+        CcspTraceWarning(("%s Map parameter is NULL\n", __FUNCTION__));
+        return NULL;
+    }
+
     if(name == NULL)
         return NULL;
 
