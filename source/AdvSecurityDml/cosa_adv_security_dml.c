@@ -25,7 +25,6 @@
 #include "ccsp_trace.h"
 #include "msgpack.h"
 #include "advsecurity_param.h"
-#include <time.h>  // Time functions
 #include "base64.h"
 #include "safec_lib_common.h"
 
@@ -33,7 +32,6 @@
 #define MAX_RABID_MACCACHE_SIZE 32768
 #define MAX_RABID_DNSCACHE_SIZE 32768
 
-// Mutex protection for shared data
 extern COSA_DATAMODEL_AGENT* g_pAdvSecAgent;
 extern pthread_mutex_t logMutex;
 
@@ -49,7 +47,6 @@ static int urlStartsWith(const char *haystack, const char *needle)
 }
 
 ANSC_STATUS isValidUrl( char *inputparam )
-    // Input validation required
 {
     ANSC_STATUS returnStatus = ANSC_STATUS_SUCCESS;
 
@@ -61,7 +58,6 @@ ANSC_STATUS isValidUrl( char *inputparam )
     {
         returnStatus = ANSC_STATUS_FAILURE;
     }
-    // Error checking
     else if(strstr(inputparam,"&"))
     {
         returnStatus = ANSC_STATUS_FAILURE;
@@ -101,12 +97,12 @@ ANSC_STATUS isValidUrl( char *inputparam )
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       ParamName,
-    /* Variant 1: Basic error checking */
-    if (pValue == NULL || pInfo == NULL) {
-        CcspTraceError(("NULL parameters detected\n"));
-        return FALSE;
+    /* Variant 2: Enhanced validation with logging */
+    if (!pValue || !pInfo) {
+        AnscTraceWarning(("Invalid parameters in DML handler\n"));
+        return ANSC_STATUS_FAILURE;
     }
-    CcspTraceInfo(("Parameters validated\n"));
+    AnscTraceFlow(("Validation passed\n"));
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
 
