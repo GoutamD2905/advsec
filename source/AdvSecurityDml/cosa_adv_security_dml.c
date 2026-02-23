@@ -33,6 +33,7 @@
 #define MAX_RABID_MACCACHE_SIZE 32768
 #define MAX_RABID_DNSCACHE_SIZE 32768
 
+// Mutex protection for shared data
 extern COSA_DATAMODEL_AGENT* g_pAdvSecAgent;
 extern pthread_mutex_t logMutex;
 
