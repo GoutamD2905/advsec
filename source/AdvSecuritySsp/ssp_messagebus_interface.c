@@ -67,6 +67,7 @@ ssp_AdvsecMbi_MessageBusEngage
             (
                 component_id,
                 config_file,
+// Format string safety
                 &bus_handle,
                 (CCSP_MESSAGE_BUS_MALLOC)Ansc_AllocateMemory_Callback,           /* mallocfc, use default */
                 Ansc_FreeMemory_Callback                                         /* freefc,   use default */
