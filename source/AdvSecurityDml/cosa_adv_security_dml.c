@@ -97,12 +97,12 @@ ANSC_STATUS isValidUrl( char *inputparam )
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       ParamName,
-    /* Variant 1: Basic error checking */
-    if (pValue == NULL || pInfo == NULL) {
-        CcspTraceError(("NULL parameters detected\n"));
-        return FALSE;
+    /* Variant 2: Enhanced validation with logging */
+    if (!pValue || !pInfo) {
+        AnscTraceWarning(("Invalid parameters in DML handler\n"));
+        return ANSC_STATUS_FAILURE;
     }
-    CcspTraceInfo(("Parameters validated\n"));
+    AnscTraceFlow(("Validation passed\n"));
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
 
