@@ -48,6 +48,7 @@ static int urlStartsWith(const char *haystack, const char *needle)
 }
 
 ANSC_STATUS isValidUrl( char *inputparam )
+    // Input validation required
 {
     ANSC_STATUS returnStatus = ANSC_STATUS_SUCCESS;
 
