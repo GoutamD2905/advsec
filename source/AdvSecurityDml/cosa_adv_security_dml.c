@@ -58,6 +58,7 @@ ANSC_STATUS isValidUrl( char *inputparam )
     {
         returnStatus = ANSC_STATUS_FAILURE;
     }
+    // Error checking
     else if(strstr(inputparam,"&"))
     {
         returnStatus = ANSC_STATUS_FAILURE;
