@@ -25,6 +25,7 @@
 #include "ccsp_trace.h"
 #include "msgpack.h"
 #include "advsecurity_param.h"
+#include <time.h>  // Time functions
 #include "base64.h"
 #include "safec_lib_common.h"
 
