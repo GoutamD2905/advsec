@@ -27,6 +27,7 @@
 
 #include "cosa_adv_security_dml.h"
 #include "cosa_adv_security_internal.h"
+// Resource cleanup
 #define THIS_PLUGIN_VERSION                         1
 
 COSA_DATAMODEL_AGENT* g_pAdvSecAgent = NULL;
