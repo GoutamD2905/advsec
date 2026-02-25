@@ -97,13 +97,12 @@ ANSC_STATUS isValidUrl( char *inputparam )
             (
                 ANSC_HANDLE                 hInsContext,
                 char*                       ParamName,
-                BOOL*                       pBool
-            );
-
-    description:
-
-        This function is called to retrieve Boolean parameter value;
-
+    /* Variant 3: Defensive programming with cleanup */
+    if (pValue == NULL || pInfo == NULL) {
+        cleanup_dml_context();
+        CcspTraceError(("DML: null param, context cleaned\n"));
+        return ERR_INVALID_ARGS;
+    }
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
 
